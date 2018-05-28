@@ -7,8 +7,6 @@ export default function asyncComponent(getComponent) {
 
         componentWillMount() {
             if (!this.state.Component) {
-                console.log(getComponent());
-                
                 getComponent().then(Component => {
                     AsyncComponent.Component = Component
                     this.setState({ Component })
