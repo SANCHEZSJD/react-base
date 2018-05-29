@@ -5,8 +5,9 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import green from '@material-ui/core/colors/green'
 import { withStyles } from '@material-ui/core/styles'
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import { Redirect } from 'react-router-dom'
 
 import '../../assets/sass/Login.sass'
 
@@ -57,7 +58,8 @@ class Login extends React.Component {
         clearTimeout(this.timer)
     }
 
-    handleButtonClick = () => {
+    handleFormSumit = e => {
+        e.preventDefault();
         if (!this.state.loading) {
             this.setState(
                 {
@@ -70,8 +72,8 @@ class Login extends React.Component {
                             loading: false,
                             success: true,
                         });
-                        console.log(this.state.model);
-
+                        localStorage.setItem('user', JSON.stringify(this.state.model));
+                        this.forceUpdate()
                     }, 2000)
                 }
             )
@@ -94,54 +96,57 @@ class Login extends React.Component {
             'full-width': true
         })
 
-
-        return (
-            <div className="login-wrapper">
-                <div className="login">
-                    <form noValidate autoComplete="off">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <TextField
-                                    id="user"
-                                    name='user'
-                                    label="User"
-                                    className="full-width"
-                                    value={model.user}
-                                    onChange={this.handleInputChange}
-                                    margin="normal"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    id="password"
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    className="full-width"
-                                    value={model.password}
-                                    onChange={this.handleInputChange}
-                                    margin="normal"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <div className="mt">
-                                    <div className={classes.wrapper}>
-                                        <Button
-                                            variant="raised"
-                                            color="primary"
-                                            className={buttonClassname}
-                                            disabled={loading}
-                                            onClick={this.handleButtonClick}
-                                        >{loading ? 'Process' : 'Login'}</Button>
-                                        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        if (localStorage.getItem('user')) {
+            return <Redirect to='/app' />
+        } else {
+            return (
+                <div className="login-wrapper">
+                    <div className="login">
+                        <form noValidate autoComplete="off" onSubmit={this.handleFormSumit}>
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        id="user"
+                                        name='user'
+                                        label="User"
+                                        className="full-width"
+                                        value={model.user}
+                                        onChange={this.handleInputChange}
+                                        margin="normal"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        id="password"
+                                        name="password"
+                                        label="Password"
+                                        type="password"
+                                        className="full-width"
+                                        value={model.password}
+                                        onChange={this.handleInputChange}
+                                        margin="normal"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <div className="mt">
+                                        <div className={classes.wrapper}>
+                                            <Button
+                                                type="submit"
+                                                variant="raised"
+                                                color="primary"
+                                                className={buttonClassname}
+                                                disabled={loading}
+                                            >{loading ? 'Process' : 'Login'}</Button>
+                                            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                                        </div>
                                     </div>
-                                </div>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }
 

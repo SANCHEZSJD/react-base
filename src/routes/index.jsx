@@ -11,6 +11,7 @@ const Login = asyncComponent(() =>
 const indexRoutes = [
     { path: "/app", component: Dashboard },
     { path: "/login", component: Login },
+    { path: "**", component: Login },
 ];
 
 export default indexRoutes;
