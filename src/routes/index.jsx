@@ -7,11 +7,9 @@ const Login = asyncComponent(() =>
     import('../layouts/Login/Login').then(module => module.default)
 )
 
-
 const indexRoutes = [
-    { path: "/app", component: Dashboard },
-    { path: "/login", component: Login },
-    { path: "**", component: Login },
-];
+    { path: "/", component: Dashboard },
+    { path: "/login", component: Login }
+]
 
-export default indexRoutes;
+export default indexRoutes
