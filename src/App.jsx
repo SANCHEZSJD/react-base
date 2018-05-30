@@ -2,6 +2,8 @@ import React from 'react'
 import indexRoutes from "./routes/index.jsx"
 import { createBrowserHistory } from "history"
 import { Router, Route, Switch } from "react-router-dom";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+
 
 import './assets/sass/index.sass'
 
@@ -12,7 +14,6 @@ class App extends React.Component {
         super(props)
         history.push('/login')
     }
-
     render() {
         return (
             <Router history={history}>
