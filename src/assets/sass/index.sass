@@ -19,3 +19,14 @@
 
 .mt
     margin-top: $margin
+
+.fade-enter
+    opacity: 0;
+    z-index: 1;
+    background: red;
+
+
+.fade-enter.fade-enter-active
+    opacity: 1;
+    background: tomato;
+    transition: opacity 250ms ease-in;

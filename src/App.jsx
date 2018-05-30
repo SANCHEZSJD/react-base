@@ -10,7 +10,9 @@ const history = createBrowserHistory()
 class App extends React.Component {
     constructor(props) {
         super(props)
-        history.push('/login')
+        if (!localStorage.getItem('user')) {
+            history.push('/login')
+        }
     }
 
     render() {

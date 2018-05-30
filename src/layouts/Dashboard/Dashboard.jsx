@@ -1,6 +1,8 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
+
+import appRoutes from './../../routes/app'
+import { Redirect, Route, Link } from "react-router-dom";
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -22,12 +24,17 @@ class Dashboard extends React.Component {
             <div>
                 <h1>Dashboard</h1>
                 <h2>Hi {this.state.user.user}</h2>
-                <Button
-                    type="button"
-                    variant="raised"
-                    color="primary"
-                    onClick={this.handleLogout}
-                >Logout</Button>
+                <Button type="button" variant="raised" color="primary" onClick={this.handleLogout} >Logout</Button>
+                <div>
+                    <ul>
+                        <li><Link to="/app/view-example">View example</Link></li>
+                    </ul>
+                </div>
+                {
+                    appRoutes.map((prop, key) => {
+                        return <Route path={prop.path} component={prop.component} key={key} />
+                    })
+                }
             </div>
         )
 
